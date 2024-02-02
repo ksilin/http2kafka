@@ -15,7 +15,7 @@ public class EventsResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postEvent(String event) {
+    public Response postEvent(CamEventRequest event) {
         processor.produce(event);
         return Response.accepted().build();
     }
