@@ -1,0 +1,49 @@
+kafka.ssl.endpoint.identification.algorithm=https
+kafka.sasl.mechanism=PLAIN
+
+%dev.kafka.bootstrap.servers=${BOOTSTRAP_SERVERS:localhost:19092}
+%dev.kafka.security.protocol=SASL_PLAINTEXT
+%dev.kafka.sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required \
+     username="alice" \
+     password="alice-secret";
+
+%test.kafka.bootstrap.servers=${BOOTSTRAP_SERVERS:pkc-xxx.confluent.cloud:9092}
+%test.kafka.security.protocol=SASL_SSL
+%test.kafka.sasl.mechanism=PLAIN
+%test.kafka.sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required \
+     username="USERNAME" \
+     password="PASSWORD";
+
+# quarkus.http.port=9000
+# quarkus.http.ssl-port=8443
+# quarkus.http.test-ssl-port=8444
+
+# kafka.security.protocol=SASL_SSL
+# kafka.sasl.mechanism=PLAIN
+# kafka.sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="<your-confluent-cloud-api-key>" password="<your-confluent-cloud-api-secret>";
+
+mp.messaging.outgoing.events-out.topic=carCamEventsIn
+
+# JSON Serde by default
+#mp.messaging.outgoing.events-out.value.serializer=org.apache.kafka.common.serialization.StringSerializer
+
+quarkus.http.auth.basic=true
+quarkus.security.users.embedded.enabled=true
+quarkus.security.users.embedded.plain-text=true
+quarkus.security.users.embedded.users.alice=alice
+quarkus.security.users.embedded.roles.alice=admin
+quarkus.security.users.embedded.users.bob=bob
+quarkus.security.users.embedded.roles.bob=user
+
+quarkus.http.ssl.certificate.files=${CERT_FILE_PATH:/self-signed-cert.pem}
+quarkus.http.ssl.certificate.key-files=${KEY_FILE_PATH:/key.pem}
+
+# redirect or disabled
+quarkus.http.insecure-requests=disabled
+
+%dev.quarkus.log.level=INFO
+%local.quarkus.log.level=DEBUG
+%test.quarkus.log.level=DEBUG
+%prod.quarkus.log.level=INFO
+
+

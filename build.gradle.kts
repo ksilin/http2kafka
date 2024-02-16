@@ -21,8 +21,10 @@ dependencies {
     implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
     implementation("io.quarkus:quarkus-arc")
     implementation("io.quarkus:quarkus-elytron-security-properties-file")
+
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
+    implementation("io.vavr:vavr:0.10.4")
 
     annotationProcessor("io.soabase.record-builder:record-builder-processor:37")
     compileOnly("io.soabase.record-builder:record-builder-core:37")
@@ -32,8 +34,8 @@ group = "com.example"
 version = "1.0.0-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 tasks.withType<Test> {
