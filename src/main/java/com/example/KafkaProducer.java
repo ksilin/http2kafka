@@ -6,6 +6,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
 
+import java.util.concurrent.CompletionStage;
+
 @ApplicationScoped
 public class KafkaProducer {
 
@@ -13,10 +15,12 @@ public class KafkaProducer {
 
     @Inject
     @Channel("events-out")
+    @OnOverflow(value = OnOverflow.Strategy.BUFFER, bufferSize = 1)
     Emitter<CamEventRequest> emitter;
 
-    public void produce(CamEventRequest payload) {
-        log.debugf("Received payload: %s " + payload);
-        emitter.send(payload);
+    public CompletionStage<Void> produce(CamEventRequest payload) {
+        log.debugf("producing kafka message: %s " + payload);
+        return emitter.send(payload);
+    }
     }
 }
