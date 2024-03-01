@@ -1,0 +1,14 @@
+version: "3.5"
+services:
+  http2kafka:
+    hostname: http2kafka
+    container_name: http2kafka
+    ports:
+      - "9000:9000"
+    build:
+      context: .
+      dockerfile: src/main/docker/Dockerfile.gradle.jvm
+    image: example/http2kafka
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: host.docker.internal:19092
+      QUARKUS_PROFILE: dev
