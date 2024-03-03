@@ -13,6 +13,86 @@ You can run your application in dev mode that enables live coding using:
 
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
 
+## health REST endpoints
+
+The application provides startup/liveness and readiness health checks. 
+
+On startup, availability of the target topic is required. 
+
+Liveness - broker is accessible and no errors were thrown during production
+
+Readiness - broker is accessible
+
+##### startup
+
+```json
+❯ https :8443/q/health/started -A basic -a alice:alice --verify=no
+HTTP/1.1 200 OK
+content-length: 233
+content-type: application/json; charset=UTF-8
+
+{
+    "checks": [
+        {
+            "data": {
+                "events-out": "[OK]"
+            },
+            "name": "SmallRye Reactive Messaging - startup check",
+            "status": "UP"
+        }
+    ],
+    "status": "UP"
+}
+```
+
+##### liveness
+
+```json
+❯ https :8443/q/health/live -A basic -a alice:alice --verify=no
+HTTP/1.1 200 OK
+content-length: 234
+content-type: application/json; charset=UTF-8
+
+{
+    "checks": [
+        {
+            "data": {
+                "events-out": "[OK]"
+            },
+            "name": "SmallRye Reactive Messaging - liveness check",
+            "status": "UP"
+        }
+    ],
+    "status": "UP"
+}
+```
+
+
+
+##### readiness
+
+```json
+❯ https :8443/q/health/ready -A basic -a alice:alice --verify=no
+HTTP/1.1 200 OK
+content-length: 235
+content-type: application/json; charset=UTF-8
+
+{
+    "checks": [
+        {
+            "data": {
+                "events-out": "[OK]"
+            },
+            "name": "SmallRye Reactive Messaging - readiness check",
+            "status": "UP"
+        }
+    ],
+    "status": "UP"
+}
+```
+
+
+
 ## Packaging and running the application
 
 The application can be packaged using:
