@@ -1,14 +1,21 @@
-version: "3.5"
+version: "3.7"
 services:
   http2kafka:
     hostname: http2kafka
     container_name: http2kafka
+    networks:
+      - kennz_net
     ports:
-      - "9000:9000"
+      - "8443:8443"
     build:
       context: .
       dockerfile: src/main/docker/Dockerfile.gradle.jvm
     image: example/http2kafka
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: host.docker.internal:19092
+      KAFKA_BOOTSTRAP_SERVERS: kafka:19092
       QUARKUS_PROFILE: dev
+
+networks:
+  kennz_net:
+    name: kennz_net
+    external: true
