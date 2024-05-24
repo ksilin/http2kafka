@@ -2,7 +2,6 @@ package com.example;
 
 import io.quarkus.test.junit.QuarkusTest;
 
-import org.eclipse.microprofile.reactive.messaging.Message;
 import org.junit.jupiter.api.Test;
 
 import jakarta.inject.Inject;
@@ -13,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class MyReactiveMessagingApplicationTest {
 
     @Inject
-    KafkaProducer application;
+    KafkaCamEventProducer application;
 
     @Test
     void test() {

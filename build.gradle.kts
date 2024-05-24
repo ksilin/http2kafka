@@ -15,6 +15,7 @@ val quarkusPlatformVersion: String by project
 dependencies {
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
     implementation("io.quarkus:quarkus-smallrye-reactive-messaging-kafka")
+    implementation("io.quarkus:quarkus-smallrye-fault-tolerance")
     implementation("io.quarkus:quarkus-resteasy-reactive-jackson")
     implementation("io.quarkus:quarkus-resteasy-reactive")
     implementation("io.quarkus:quarkus-micrometer")
@@ -22,10 +23,13 @@ dependencies {
     implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
     implementation("io.quarkus:quarkus-arc")
     implementation("io.quarkus:quarkus-elytron-security-properties-file")
+    implementation("io.vavr:vavr:0.10.4")
 
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
-    implementation("io.vavr:vavr:0.10.4")
+    testImplementation("io.quarkus:quarkus-test-kafka-companion")
+    testImplementation("uk.co.jemos.podam:podam:8.0.0.RELEASE")
+    testImplementation("com.github.mifmif:generex:1.0.2")
 
     annotationProcessor("io.soabase.record-builder:record-builder-processor:37")
     compileOnly("io.soabase.record-builder:record-builder-core:37")

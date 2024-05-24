@@ -19,8 +19,8 @@ public class KafkaAdminClientProducer {
 
     public AdminClient produceAdminClient(@ConfigProperty(name = "kafka.bootstrap.servers") String bootstrapServers,
                                           @ConfigProperty(name = "kafka.security.protocol", defaultValue = "PLAINTEXT") String securityProtocol,
-                                          @ConfigProperty(name = "kafka.sasl.mechanism", defaultValue = "") String saslMechanism,
-                                          @ConfigProperty(name = "kafka.sasl.jaas.config", defaultValue = "") String jaasConfig) {
+                                          @ConfigProperty(name = "kafka.sasl.mechanism", defaultValue = "UNUSED") String saslMechanism,
+                                          @ConfigProperty(name = "kafka.sasl.jaas.config", defaultValue = "UNUSED") String jaasConfig) {
         return createAdminClient(bootstrapServers, securityProtocol, saslMechanism, jaasConfig);
     }
 
