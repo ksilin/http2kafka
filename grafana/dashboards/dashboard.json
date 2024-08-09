@@ -1,0 +1,144 @@
+{
+  "id": null,
+  "title": "JVM Metrics",
+  "uid": "jvm-metrics-dashboard",
+  "timezone": "browser",
+  "schemaVersion": 16,
+  "version": 1,
+  "panels": [
+    {
+      "type": "graph",
+      "title": "JVM Memory Usage",
+      "targets": [
+        {
+          "expr": "jvm_memory_used_bytes",
+          "legendFormat": "{{region}}",
+          "refId": "A"
+        },
+        {
+          "expr": "jvm_memory_committed_bytes",
+          "legendFormat": "{{region}}",
+          "refId": "B"
+        },
+        {
+          "expr": "jvm_memory_max_bytes",
+          "legendFormat": "{{region}}",
+          "refId": "C"
+        }
+      ],
+      "datasource": "Prometheus",
+      "xaxis": {
+        "mode": "time"
+      },
+      "yaxes": [
+        {
+          "format": "bytes",
+          "label": "Memory",
+          "logBase": 1
+        },
+        {
+          "format": "bytes",
+          "logBase": 1
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "JVM Garbage Collection",
+      "targets": [
+        {
+          "expr": "jvm_gc_pause_seconds_sum",
+          "legendFormat": "Total Pause Time",
+          "refId": "A"
+        },
+        {
+          "expr": "jvm_gc_pause_seconds_count",
+          "legendFormat": "Pause Count",
+          "refId": "B"
+        },
+        {
+          "expr": "jvm_gc_overhead_percent",
+          "legendFormat": "GC Overhead",
+          "refId": "C"
+        }
+      ],
+      "datasource": "Prometheus",
+      "xaxis": {
+        "mode": "time"
+      },
+      "yaxes": [
+        {
+          "format": "percent",
+          "label": "Overhead",
+          "logBase": 1
+        },
+        {
+          "format": "s",
+          "logBase": 1
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "JVM Threads",
+      "targets": [
+        {
+          "expr": "jvm_threads_live_threads",
+          "legendFormat": "Live Threads",
+          "refId": "A"
+        },
+        {
+          "expr": "jvm_threads_daemon_threads",
+          "legendFormat": "Daemon Threads",
+          "refId": "B"
+        },
+        {
+          "expr": "jvm_threads_peak_threads",
+          "legendFormat": "Peak Threads",
+          "refId": "C"
+        }
+      ],
+      "datasource": "Prometheus",
+      "xaxis": {
+        "mode": "time"
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "Threads",
+          "logBase": 1
+        },
+        {
+          "format": "short",
+          "logBase": 1
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "System CPU Usage",
+      "targets": [
+        {
+          "expr": "system_cpu_usage",
+          "legendFormat": "CPU Usage",
+          "refId": "A"
+        }
+      ],
+      "datasource": "Prometheus",
+      "xaxis": {
+        "mode": "time"
+      },
+      "yaxes": [
+        {
+          "format": "percent",
+          "label": "CPU",
+          "logBase": 1
+        },
+        {
+          "format": "percent",
+          "logBase": 1
+        }
+      ]
+    }
+  ]
+}
