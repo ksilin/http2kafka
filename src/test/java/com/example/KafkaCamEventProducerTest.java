@@ -13,6 +13,7 @@ import org.jboss.logging.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.IntStream;
@@ -22,6 +23,7 @@ import java.util.stream.Stream;
 @QuarkusTestResource(value = KafkaCompanionResource.class, initArgs = {
         @ResourceArg(name = "kafka.port", value = "59092"), // Fixed port for kafka, by default it will be exposed on a random port
         @ResourceArg(name = "num.partitions", value = "3"), // Other custom broker configurations
+        @ResourceArg(name = "auto.create.topics.enable", value = "false"), // Other custom broker configurations
 })
 public class KafkaCamEventProducerTest {
 
@@ -36,7 +38,6 @@ public class KafkaCamEventProducerTest {
     @ConfigProperty(name = "mp.messaging.outgoing.events-out.topic")
     String eventsTopicName;
 
-    // TODO - create test topic
     @BeforeEach
     void beforeEach(){
         companion.topics().createAndWait(eventsTopicName, 3);
@@ -45,8 +46,9 @@ public class KafkaCamEventProducerTest {
     @Test
     public void testProduce(){
 
-        // [com.exa.KafkaCamEventProducerTest] (Test worker) produced 20000 messages in 2597 ms
-        var plateCount = 50000;
+        // produced 20000 messages in 2597 ms
+        // produced 50000 messages in 4497 ms
+        var plateCount = 70;
         var generexFormat = "[A-Z]{3} [A-Z]{2} \\d{4}";
         Generex generex = new Generex(generexFormat);
 
@@ -58,15 +60,22 @@ public class KafkaCamEventProducerTest {
         List<CamEventRequest> camEventRequests = plates.stream().map(plate -> MockDataFactory.makeCamEventRequest(nowMillisString, plate, plate, MockDataFactory.sensorProviderId_notEntryExit)).toList();
 
         var produceStart = System.currentTimeMillis();
-        Stream<CompletableFuture<Void>> completionStageStream = camEventRequests.stream().map(r -> producer.produce(r).toCompletableFuture());
-        CompletableFuture[] array = completionStageStream.toList().toArray(new CompletableFuture[0]);
-        CompletableFuture.allOf(array).join();
+        produceEventList(camEventRequests);
         var produceStop = System.currentTimeMillis();
-
         log.infof("produced %d messages in %d ms", plateCount, produceStop - produceStart);
+
+        companion.topics().delete(eventsTopicName);
+        KafkaCompanion.waitFor(() -> !companion.topics().list().contains(eventsTopicName), Duration.ofSeconds(30));
+
+        produceEventList(camEventRequests);
 
     }
 
+    private void produceEventList(List<CamEventRequest> camEventRequests) {
+        Stream<CompletableFuture<Void>> completionStageStream = camEventRequests.stream().map(r -> producer.produce(r).toCompletableFuture());
+        CompletableFuture[] array = completionStageStream.toList().toArray(new CompletableFuture[0]);
+        CompletableFuture.allOf(array).join();
+    }
 
 
 }

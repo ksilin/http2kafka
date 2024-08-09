@@ -24,7 +24,7 @@ public class KafkaCamEventProducer {
     @Retry(maxRetries = 5, delay = 1000, maxDuration = 5000, jitter = 500)
     //@Backoff(delay = 200, maxDelay = 2000, multiplier = 1.5)
     public CompletionStage<Void> produce(CamEventRequest payload) {
-        log.debugf("producing kafka message: %s " + payload);
+        log.debugf("producing kafka message:" + payload);
         return emitter.send(payload);
     }
 

@@ -38,4 +38,5 @@ public class EventsResource {
         processor.produce(event);
         return Response.accepted().build();
     }
+
 }
