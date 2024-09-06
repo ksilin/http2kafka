@@ -86,7 +86,7 @@ RUN gradle tasks --no-daemon --debug
 RUN gradle build -x test --no-daemon --debug
 RUN ls -la /home/gradle/src
 
-FROM registry.access.redhat.com/ubi9/openjdk-21:1.18-1
+FROM azul/zulu-openjdk:21
 
 ENV LANGUAGE='en_US:en'
 
@@ -95,6 +95,11 @@ COPY --from=builder --chown=185 /home/gradle/src/build/quarkus-app/lib/ /deploym
 COPY --from=builder --chown=185 /home/gradle/src/build/quarkus-app/*.jar /deployments/
 COPY --from=builder --chown=185 /home/gradle/src/build/quarkus-app/app/ /deployments/app/
 COPY --from=builder --chown=185 /home/gradle/src/build/quarkus-app/quarkus/ /deployments/quarkus/
+
+# using custom run-java script
+RUN mkdir -p /opt/jboss/container/java/run/
+COPY src/main/docker/run-java.sh /opt/jboss/container/java/run/run-java.sh
+RUN chmod +x /opt/jboss/container/java/run/run-java.sh
 
 EXPOSE 8080
 USER 185
