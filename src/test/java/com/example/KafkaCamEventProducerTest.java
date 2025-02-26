@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 @QuarkusTest
 @QuarkusTestResource(value = KafkaCompanionResource.class, initArgs = {
         @ResourceArg(name = "kafka.port", value = "59092"), // Fixed port for kafka, by default it will be exposed on a random port
-        @ResourceArg(name = "num.partitions", value = "3"), // Other custom broker configurations
+        @ResourceArg(name = "num.partitions", value = "1"), // Other custom broker configurations
         @ResourceArg(name = "auto.create.topics.enable", value = "false"), // Other custom broker configurations
 })
 public class KafkaCamEventProducerTest {
@@ -40,7 +40,7 @@ public class KafkaCamEventProducerTest {
 
     @BeforeEach
     void beforeEach(){
-        companion.topics().createAndWait(eventsTopicName, 3);
+        companion.topics().createAndWait(eventsTopicName, 1);
     }
 
     @Test
