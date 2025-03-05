@@ -1,6 +1,8 @@
 plugins {
     java
     id("io.quarkus")
+    id("org.jetbrains.kotlin.jvm") version "2.1.10"
+    id("com.github.ben-manes.versions") version "0.51.0"
 }
 
 repositories {
@@ -13,11 +15,14 @@ val quarkusPlatformArtifactId: String by project
 val quarkusPlatformVersion: String by project
 
 dependencies {
+    implementation("io.quarkus:quarkus-kubernetes-config")
+    implementation("io.quarkus:quarkus-kubernetes")
+    implementation("io.quarkus:quarkus-container-image-jib")
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
-    implementation("io.quarkus:quarkus-smallrye-reactive-messaging-kafka")
+    implementation("io.quarkus:quarkus-messaging-kafka")
     implementation("io.quarkus:quarkus-smallrye-fault-tolerance")
-    implementation("io.quarkus:quarkus-resteasy-reactive-jackson")
-    implementation("io.quarkus:quarkus-resteasy-reactive")
+    implementation("io.quarkus:quarkus-rest-jackson")
+    implementation("io.quarkus:quarkus-rest")
     implementation("io.quarkus:quarkus-micrometer")
     implementation("io.quarkus:quarkus-smallrye-health")
     implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
@@ -28,11 +33,11 @@ dependencies {
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
     testImplementation("io.quarkus:quarkus-test-kafka-companion")
-    testImplementation("uk.co.jemos.podam:podam:8.0.0.RELEASE")
+    testImplementation("uk.co.jemos.podam:podam:8.0.2.RELEASE")
     testImplementation("com.github.mifmif:generex:1.0.2")
 
-    annotationProcessor("io.soabase.record-builder:record-builder-processor:37")
-    compileOnly("io.soabase.record-builder:record-builder-core:37")
+    annotationProcessor("io.soabase.record-builder:record-builder-processor:44")
+    compileOnly("io.soabase.record-builder:record-builder-core:44")
 }
 
 group = "com.example"

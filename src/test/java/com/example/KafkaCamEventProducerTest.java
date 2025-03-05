@@ -64,8 +64,8 @@ public class KafkaCamEventProducerTest {
         var produceStop = System.currentTimeMillis();
         log.infof("produced %d messages in %d ms", plateCount, produceStop - produceStart);
 
-        companion.topics().delete(eventsTopicName);
-        KafkaCompanion.waitFor(() -> !companion.topics().list().contains(eventsTopicName), Duration.ofSeconds(30));
+        //companion.topics().delete(eventsTopicName);
+        //KafkaCompanion.waitFor(() -> !companion.topics().list().contains(eventsTopicName), Duration.ofSeconds(30));
 
         produceEventList(camEventRequests);
 
