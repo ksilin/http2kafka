@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 
 @QuarkusTest
 @QuarkusTestResource(value = KafkaCompanionResource.class, initArgs = {
-        @ResourceArg(name = "kafka.port", value = "59092"), // Fixed port for kafka, by default it will be exposed on a random port
+        @ResourceArg(name = "kafka.port", value = "63092"), // Fixed port for kafka, by default it will be exposed on a random port
         @ResourceArg(name = "num.partitions", value = "1"), // Other custom broker configurations
         @ResourceArg(name = "auto.create.topics.enable", value = "false"), // Other custom broker configurations
 })
